@@ -1,0 +1,35 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "firstName": "Sailaja",
+      "lastName": "Lakkakula",
+      "username": "admin",
+      "password": "admin",
+      "role":  "admin"
+    },
+    {
+      "id": 2,
+      "firstName": "first",
+      "lastName": "last",
+      "username": "one",
+      "password": "one",
+      "role":  "user"
+    }
+  ],
+  "shifts": [
+    {
+      "id": 1,
+      "title": "Shift 1",
+      "description": "Shift available",
+      "date": "2023-09-15T03:13:00.076Z",
+      "userId": 1
+    }
+  ],
+  "timeOff": [
+    {
+      "date": "2023-09-16T03:13:00.076Z",
+      "userId": 1
+    }
+  ]
+}
