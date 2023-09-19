@@ -3,7 +3,9 @@ import './App.css';
 import Home from './components/Home';
 import {Provider} from "react-redux";
 import {store} from "./state";
-import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
+import {HashRouter as Router, Routes, Route} from "react-router-dom";
+import CreateUser from "./components/CreateUser";
+import ShiftsHome from "./components/ShiftsHome";
 
 function App() {
     return (
@@ -12,6 +14,8 @@ function App() {
                 <div className="container">
                     <Routes>
                         <Route path="/" element={<Home />} />
+                        <Route path="/createuser" element={<CreateUser />} />
+                        <Route path="/shifts" element={<ShiftsHome />} />
                     </Routes>
                 </div>
             </Router>

@@ -17,9 +17,9 @@ function Header() {
                 <a href="#" className="logo">SCHEDULER</a>
                 {isLoggedIn ? <>
                     <a href="#" className="button">Home</a>
-                    <a href="/shifts" className="button">Shifts</a>
-                    <a href="/timeoff" className="button">Time off</a>
-                    { loggedInUser && loggedInUser.role === 'admin' ? <a href="/createuser" className="button">Create User</a> : null}
+                    <a href="#/shifts" className="button">Shifts</a>
+                    <a href="#/timeoff" className="button">Time off</a>
+                    { loggedInUser && loggedInUser.role === 'admin' ? <a href="#/createuser" className="button">Create User</a> : null}
                     <a href="/logout" className="button" onClick={handleLogout}>Logout</a>
                 </> : null}
             </header>

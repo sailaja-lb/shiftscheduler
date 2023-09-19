@@ -7,19 +7,32 @@ export const REGISTER = 'REGISTER'
 export const REGISTER_CANCEL = 'REGISTER_CANCEL'
 export const CREATE_USER = 'CREATE_USER'
 export const USERS = 'USERS'
+export const CREATE_USER_SUBMIT = 'CREATE_USER_SUBMIT'
+export const CREATE_USER_SUCCESS = 'CREATE_USER_SUCCESS'
+export const CREATE_USER_ERROR = 'CREATE_USER_ERROR'
 export const CREATE_USER_CANCEL = 'CREATE_USER_CANCEL'
 export const LOGOUT = 'LOGOUT'
+export const CREATE_SHIFT = 'CREATE_SHIFT';
+export const ADMIN_VIEW_SHIFTS = "ADMIN_VIEW_SHIFTS";
+
 // User tupe
 export interface IUser {
-    "id": number,
+    "id"?: number,
     "firstName": string,
     "lastName": string,
     "username": string,
+    "password": string,
     "role": string
 }
 export interface ICredentials {
     username: string,
     password: string
+}
+export interface IShift {
+    id?: number;
+    title: string;
+    date: string;
+    userId?: number;
 }
 
 // InitialState
@@ -34,8 +47,13 @@ export interface IInitialState {
     loginPending: boolean,
     registerPending: boolean,
     credentials: ICredentials,
-    newUser: IUser | null,
-    loginDisabled: boolean
+    newUser: IUser,
+    loginDisabled: boolean,
+    isCreateUserInProgress: boolean,
+    errorRegisterMessage: string,
+    isCreateShift: false,
+    isAdminViewShifts: false;
+    newShift: IShift;
 }
 
 export interface IUpdateCredentials {
@@ -59,14 +77,31 @@ export interface Register {
 export interface RegisterCancel {
     type: typeof REGISTER_CANCEL;
 }
-interface CreateUser {
+export interface ICreateUser {
     type: typeof CREATE_USER;
+    payload: {newUser: IUser}
+}
+export interface ICreateUserSubmit {
+    type: typeof CREATE_USER_SUBMIT;
+}
+export interface ICreateUserSuccess {
+    type: typeof CREATE_USER_SUCCESS;
+}
+export interface ICreateUserCancel {
+    type: typeof CREATE_USER_CANCEL;
+}
+export interface ICreateUserError {
+    type: typeof CREATE_USER_ERROR;
+    payload: {message: string}
+}
+export interface ICreateShift {
+    type: typeof CREATE_SHIFT;
+}
+export interface IAdminViewShifts {
+    type: typeof ADMIN_VIEW_SHIFTS
 }
 interface Logout {
     type: typeof LOGOUT;
-}
-interface CreateUserCancel {
-    type: typeof CREATE_USER_CANCEL;
 }
 interface Users {
     type: typeof USERS;
@@ -77,9 +112,12 @@ export type ActionTypes =
     | ILoginStart
     | LoginError
     | LoginSuccess
-    | Register
-    | RegisterCancel
-    | CreateUser
+    | ICreateUser
+    | ICreateUserSubmit
+    | ICreateUserSuccess
+    | ICreateUserCancel
+    | ICreateUserError
+    | ICreateShift
+    | IAdminViewShifts
     | Logout
-    | CreateUserCancel
     | Users;

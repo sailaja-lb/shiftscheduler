@@ -1,19 +1,22 @@
 import {
-    ActionTypes,
+    ActionTypes, ADMIN_VIEW_SHIFTS, CREATE_SHIFT,
     CREATE_USER,
-    CREATE_USER_CANCEL,
-    IInitialState,
+    CREATE_USER_CANCEL, CREATE_USER_ERROR,
+    CREATE_USER_SUBMIT,
+    CREATE_USER_SUCCESS,
+    IInitialState, IShift,
+    IUser,
     LOGIN_ERROR,
     LOGIN_START,
     LOGIN_SUCCESS,
     LOGOUT,
-    REGISTER,
-    REGISTER_CANCEL,
     UPDATE_CREDENTIALS,
     USERS
 } from './schedulerTypes';
-//import {usersAPI} from "../restAPI";
 
+
+export const newUserModel: IUser = { firstName: "", lastName: "", username: "", password: "", role:  "user"};
+export const newShiftModel: IShift = { title: "", date: "" };
 export const initialState: IInitialState = {
     users: [],
     isLoggedIn: false,
@@ -25,8 +28,13 @@ export const initialState: IInitialState = {
     loginPending: false,
     registerPending: false,
     credentials: {username:'', password:''},
-    newUser: null,
-    loginDisabled: false
+    newUser: {...newUserModel},
+    loginDisabled: false,
+    isCreateUserInProgress: false,
+    errorRegisterMessage: "",
+    isCreateShift: false,
+    isAdminViewShifts: false,
+    newShift: {...newShiftModel}
 };
 
 export function schedulerReducer(
@@ -60,22 +68,38 @@ export function schedulerReducer(
                 isLoggedIn: false,
                 loginErrorMessage: action.payload.message
             };
-        case REGISTER:
-            return { ...state,
-                isRegister: true,
-                loginErrorMessage: "",
-                successfulRegisterMessage: false };
-        case REGISTER_CANCEL:
-            return { ...state,
-                isRegister: false,
+        case CREATE_USER_SUCCESS:
+            return {
+                ...state,
+                successfulRegisterMessage: "User has been registered successfully",
+                newUser: {...newUserModel},
+                errorRegisterMessage: "",
+                isCreateUserInProgress: false
             };
         case CREATE_USER:
             return {
                 ...state,
-                users: [...state.users],
-                isRegister: false,
-                isLoggedIn: false,
-                successfulRegisterMessage: true
+                newUser: action.payload.newUser,
+                successfulRegisterMessage: "",
+                errorRegisterMessage: ""
+            };
+        case CREATE_USER_SUBMIT:
+            return {
+                ...state,
+                isCreateUserInProgress: true
+            };
+        case CREATE_USER_ERROR:
+            return {
+                ...state,
+                isCreateUserInProgress: false,
+                errorRegisterMessage: action.payload.message,
+            };
+        case CREATE_USER_CANCEL:
+            return {
+                ...state,
+                newUser: {...newUserModel},
+                successfulRegisterMessage: "",
+                errorRegisterMessage: ""
             };
         case LOGOUT:
             return {
@@ -87,11 +111,18 @@ export function schedulerReducer(
                 ...state,
                 users: [...state.users],
             };
-        case CREATE_USER_CANCEL:
+        case CREATE_SHIFT:
             return {
                 ...state,
-                isRegister: false,
-                isLoggedIn: false,
+                isCreateShift: true,
+                isAdminViewShifts: false,
+                users: []
+            };
+        case ADMIN_VIEW_SHIFTS:
+            return {
+                ...state,
+                isCreateShift: false,
+                isAdminViewShifts: true
             };
         default:
             return state;

@@ -1,20 +1,69 @@
 import React from 'react';
+import Header from "./Header";
+import {useDispatch, useSelector} from "react-redux";
+import {AppState} from "../state";
+import {CREATE_USER, CREATE_USER_CANCEL, IUser} from "../state/schedulerTypes";
+import {createUser} from "../state/schedulerActions";
 
 function CreateUser() {
+    const dispatch = useDispatch();
+    const {firstName, lastName, username, password, role}: IUser = useSelector((state:AppState) => state.schedulerState.newUser);
+    const isCreateUserInProgress: boolean = useSelector((state:AppState) => state.schedulerState.isCreateUserInProgress);
+    const successfulRegisterMessage = useSelector((state: AppState) => state.schedulerState.successfulRegisterMessage);
+    const errorRegisterMessage = useSelector((state: AppState) => state.schedulerState.errorRegisterMessage)
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+        const { name, value } = event.target;
+        const changeValue = {
+            [name]: value
+        };
+
+        dispatch({type: CREATE_USER, payload: {newUser: {firstName, lastName, username, password, role, ...changeValue}}})
+    }
+    const handleSubmit = (event: React.SyntheticEvent<HTMLFormElement>): void => {
+        event.preventDefault();
+        dispatch(createUser({firstName, lastName, username, password, role}))
+    }
+    const handleCancel = () => {
+        dispatch({type: CREATE_USER_CANCEL})
+    }
+
     return (
-        <form className="input-group vertical">
-            <label htmlFor="name">Username</label>
-            <input type="text" name="username" placeholder="username" />
-            <label htmlFor="password">Password</label>
-            <textarea name="password" placeholder="password" />
-            <div className="input-group">
-                <button className="primary bordered medium">Create User</button>
-                <span />
-                <button type="button" className="bordered medium">
-                    Cancel
-                </button>
-            </div>
-        </form>
+        <>
+            <Header />
+            <main>
+                {successfulRegisterMessage ? (
+                    <div className="card">
+                        <div className="row">
+                            <div className="card error">{successfulRegisterMessage}</div>
+                        </div>
+                    </div> ) : null}
+                {errorRegisterMessage ? (
+                    <div className="card">
+                        <div className="row">
+                            <div className="card error">{errorRegisterMessage}</div>
+                        </div>
+                    </div> ) : null}
+                <form className="input-group vertical" onSubmit={handleSubmit}>
+                    <label htmlFor="name">First Name</label>
+                    <input type="text" name="firstName" value={firstName} placeholder="First Name" onChange={handleChange} />
+                    <label htmlFor="name">Last Name</label>
+                    <input type="text" name="lastName" value={lastName} placeholder="Last Name" onChange={handleChange} />
+                    <label htmlFor="name">Username</label>
+                    <input type="text" name="username" value={username} placeholder="username" onChange={handleChange} />
+                    <label htmlFor="password">Password</label>
+                    <input type="password" name="password" value={password} placeholder="password" onChange={handleChange} />
+                    <label htmlFor="password">Role</label>
+                    <div className="input-group">
+                        <input type="radio" name="role" onChange={handleChange} value={"admin"} id={"roleadmin"} checked={role==='admin' ? true : false} /> <label htmlFor={"roleadmin"}>Admin</label>
+                        <input type="radio" name="role" onChange={handleChange} value={"user"} id={"roleuser"} checked={role==='user' ? true : false} />  <label htmlFor={"roleuser"}>User</label>
+                    </div>
+                    <div className="input-group">
+                        <button className="primary bordered medium" type={"submit"} disabled={isCreateUserInProgress}>Create User</button>
+                        <button type="button" className="bordered medium" disabled={isCreateUserInProgress} onClick={handleCancel}>Cancel</button>
+                    </div>
+                </form>
+            </main>
+        </>
     );
 }
 

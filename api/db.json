@@ -6,7 +6,7 @@
       "lastName": "Lakkakula",
       "username": "admin",
       "password": "admin",
-      "role":  "admin"
+      "role": "admin"
     },
     {
       "id": 2,
@@ -14,14 +14,29 @@
       "lastName": "last",
       "username": "one",
       "password": "one",
-      "role":  "user"
+      "role": "user"
+    },
+    {
+      "firstName": "two",
+      "lastName": "two",
+      "username": "two",
+      "password": "two",
+      "role": "user",
+      "id": 3
+    },
+    {
+      "firstName": "three",
+      "lastName": "three",
+      "username": "three",
+      "password": "three",
+      "role": "user",
+      "id": 4
     }
   ],
   "shifts": [
     {
       "id": 1,
       "title": "Shift 1",
-      "description": "Shift available",
       "date": "2023-09-15T03:13:00.076Z",
       "userId": 1
     }

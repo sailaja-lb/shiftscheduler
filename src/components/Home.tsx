@@ -4,8 +4,9 @@ import {useSelector} from "react-redux";
 import {AppState} from "../state";
 import Header from "./Header";
 
-function Home() {
-    const isLoggedIn: boolean = useSelector((state: AppState) => state.schedulerState.isLoggedIn);
+function Home({_useSelector = useSelector, _Header = Header, _Login = Login}) {
+    const isLoggedIn: boolean = useSelector((state: AppState) =>
+        state.schedulerState.isLoggedIn);
 
     return (
         <>

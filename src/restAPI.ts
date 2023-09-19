@@ -1,3 +1,4 @@
+import {IUser} from "./state/schedulerTypes";
 
 const baseUrl = 'http://localhost:4000';
 
@@ -34,44 +35,7 @@ function parseJSON(response: Response) {
     return response.json();
 }
 
-// eslint-disable-next-line
-// function delay(ms: number) {
-//     return function (x: any): Promise<any> {
-//         return new Promise((resolve) => setTimeout(() => resolve(x), ms));
-//     };
-// }
-
 const usersAPI = {
-    // get(userId: number) {
-    //     return fetch(`${url}/shifts`)
-    //         .then(checkStatus("shifts"))
-    //         .then(parseJSON)
-    //         .then(convertToProjectModels)
-    //         .catch((error: TypeError) => {
-    //             // console.log('log client error ' + error);
-    //             throw new Error(
-    //                 'There was an error retrieving the projects. Please try again.'
-    //             );
-    //         });
-    // },
-    // put(project: Project) {
-    //     return fetch(`${url}/${project.id}`, {
-    //         method: 'PUT',
-    //         body: JSON.stringify(project),
-    //         headers: {
-    //             'Content-Type': 'application/json'
-    //         }
-    //     })
-    //         .then(checkStatus)
-    //         .then(parseJSON)
-    //         .catch((error: TypeError) => {
-    //             console.log('log client error ' + error);
-    //             throw new Error(
-    //                 'There was an error updating the project. Please try again.'
-    //             );
-    //         });
-    // },
-
     find(username: string, password:string) {
         return fetch(`${baseUrl}/users?username=${username}&password=${password}`)
             .then(checkStatus("users"))
@@ -84,44 +48,41 @@ const usersAPI = {
                 }
             });
     },
+    post(user: IUser) {
+        return fetch(`${baseUrl}/users`, {
+            method: 'POST',
+            body: JSON.stringify(user),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(checkStatus("users"))
+            .then(parseJSON)
+            .catch((error: TypeError) => {
+                throw new Error(
+                    'There was an error creating the user. Please try again.'
+                );
+            });
+    },
+    getAll() {
+        return fetch(`${baseUrl}/users`)
+            .then(checkStatus("users"))
+            .then(parseJSON);
+    }
 
 };
 
 const shiftsAPI = {
-    get(userId: number) {
-        return fetch(`${baseUrl}/shifts`)
-            .then(checkStatus("shifts"))
-            .then(parseJSON)
-            .catch((error: TypeError) => {
-                // console.log('log client error ' + error);
-                throw new Error(
-                    'There was an error retrieving the projects. Please try again.'
-                );
-            });
-    },
-    // put(project: Project) {
-    //     return fetch(`${url}/${project.id}`, {
-    //         method: 'PUT',
-    //         body: JSON.stringify(project),
-    //         headers: {
-    //             'Content-Type': 'application/json'
-    //         }
-    //     })
-    //         .then(checkStatus)
+    // get(userId: number) {
+    //     return fetch(`${baseUrl}/shifts`)
+    //         .then(checkStatus("shifts"))
     //         .then(parseJSON)
     //         .catch((error: TypeError) => {
-    //             console.log('log client error ' + error);
+    //             // console.log('log client error ' + error);
     //             throw new Error(
-    //                 'There was an error updating the project. Please try again.'
+    //                 'There was an error retrieving the projects. Please try again.'
     //             );
     //         });
-    // },
-
-    // find(id: number) {
-    //     return fetch(`${url}/${id}`)
-    //         .then(checkStatus)
-    //         .then(parseJSON)
-    //         .then(convertToProjectModel);
     // },
 
 };
