@@ -11,7 +11,9 @@ function Home({_useSelector = useSelector, _Header = Header, _Login = Login}) {
     return (
         <>
             <Header />
-            { !isLoggedIn ? <Login /> : null}
+            <main>
+                { !isLoggedIn ? <Login /> : <h1>Welcome to the SCHEDULER App</h1>}
+            </main>
         </>
     );
 }

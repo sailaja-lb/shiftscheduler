@@ -3,8 +3,6 @@ export const UPDATE_CREDENTIALS = 'UPDATE_CREDENTIALS'
 export const LOGIN_START = 'LOGIN_START'
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
 export const LOGIN_ERROR = 'LOGIN_ERROR'
-export const REGISTER = 'REGISTER'
-export const REGISTER_CANCEL = 'REGISTER_CANCEL'
 export const CREATE_USER = 'CREATE_USER'
 export const USERS = 'USERS'
 export const CREATE_USER_SUBMIT = 'CREATE_USER_SUBMIT'
@@ -13,9 +11,19 @@ export const CREATE_USER_ERROR = 'CREATE_USER_ERROR'
 export const CREATE_USER_CANCEL = 'CREATE_USER_CANCEL'
 export const LOGOUT = 'LOGOUT'
 export const CREATE_SHIFT = 'CREATE_SHIFT';
-export const ADMIN_VIEW_SHIFTS = "ADMIN_VIEW_SHIFTS";
+export const CREATE_SHIFT_SUBMIT = 'CREATE_SHIFT_SUBMIT';
+export const CREATE_SHIFT_SUCCESS = 'CREATE_SHIFT_SUCCESS';
+export const CREATE_SHIFT_ERROR = 'CREATE_SHIFT_ERROR';
+export const CREATE_SHIFT_CANCEL = 'CREATE_SHIFT_CANCEL';
+export const VIEW_SHIFTS = 'VIEW_SHIFTS';
+export const VIEW_SHIFTS_ERROR = 'VIEW_SHIFTS_ERROR';
+export const VIEW_TIMEOFFS = 'VIEW_TIMEOFFS';
+export const VIEW_TIMEOFFS_ERROR = 'VIEW_TIMEOFFS_ERROR';
+export const REQUEST_TIMEOFF = 'REQUEST_TIMEOFF';
+export const REQUEST_TIMEOFF_ERROR = 'REQUEST_TIMEOFF_ERROR';
 
-// User tupe
+
+// User type
 export interface IUser {
     "id"?: number,
     "firstName": string,
@@ -35,9 +43,17 @@ export interface IShift {
     userId?: number;
 }
 
+export interface ITimeoff {
+    date: string;
+    userId: number;
+    status: string;
+}
+
 // InitialState
 export interface IInitialState {
     users: IUser[],
+    shifts: IShift[],
+    timeoffs: ITimeoff[],
     isLoggedIn: boolean,
     isRegister: boolean,
     loggedInUser: IUser | null,
@@ -51,9 +67,12 @@ export interface IInitialState {
     loginDisabled: boolean,
     isCreateUserInProgress: boolean,
     errorRegisterMessage: string,
-    isCreateShift: false,
-    isAdminViewShifts: false;
-    newShift: IShift;
+    isCreateShift: boolean,
+    isAdminViewShifts: boolean,
+    newShift: IShift,
+    isCreateShiftInProgress: boolean,
+    newTimeoff: ITimeoff,
+    isRequestTimeoff: boolean
 }
 
 export interface IUpdateCredentials {
@@ -71,15 +90,9 @@ export interface LoginSuccess {
     type: typeof LOGIN_SUCCESS;
     payload: IUser
 }
-export interface Register {
-    type: typeof REGISTER;
-}
-export interface RegisterCancel {
-    type: typeof REGISTER_CANCEL;
-}
 export interface ICreateUser {
     type: typeof CREATE_USER;
-    payload: {newUser: IUser}
+    payload: { newUser: IUser };
 }
 export interface ICreateUserSubmit {
     type: typeof CREATE_USER_SUBMIT;
@@ -92,19 +105,56 @@ export interface ICreateUserCancel {
 }
 export interface ICreateUserError {
     type: typeof CREATE_USER_ERROR;
-    payload: {message: string}
+    payload: { message: string };
 }
 export interface ICreateShift {
     type: typeof CREATE_SHIFT;
+    payload: { newShift: IShift }
 }
-export interface IAdminViewShifts {
-    type: typeof ADMIN_VIEW_SHIFTS
+
+export interface ICreateShiftSubmit {
+    type: typeof CREATE_SHIFT_SUBMIT;
+}
+export interface ICreateShiftSuccess {
+    type: typeof CREATE_SHIFT_SUCCESS;
+    payload: { submittedShift: IShift }
+}
+export interface ICreateShiftError {
+    type: typeof CREATE_SHIFT_ERROR;
+}
+export interface ICreateShiftCancel {
+    type: typeof CREATE_SHIFT_CANCEL;
+}
+export interface IViewShifts {
+    type: typeof VIEW_SHIFTS;
+    payload: { shifts: IShift[] }
+}
+export interface IViewShiftsError {
+    type: typeof VIEW_SHIFTS_ERROR;
+    payload: { message: string }
+}
+export interface IViewTimeoffs {
+    type: typeof VIEW_TIMEOFFS;
+    payload: { timeoffs: ITimeoff[] }
+}
+export interface IViewTimeoffsError {
+    type: typeof VIEW_TIMEOFFS_ERROR;
+    payload: { message: string }
+}
+export interface IRequestTimeoff {
+    type: typeof REQUEST_TIMEOFF;
+    payload: { newTimeoff: ITimeoff }
+}
+export interface IRequestTimeoffsError {
+    type: typeof REQUEST_TIMEOFF_ERROR;
+    payload: { message: string }
 }
 interface Logout {
     type: typeof LOGOUT;
 }
-interface Users {
+export interface Users {
     type: typeof USERS;
+    payload: { users: IUser[] };
 }
 
 export type ActionTypes =
@@ -118,6 +168,15 @@ export type ActionTypes =
     | ICreateUserCancel
     | ICreateUserError
     | ICreateShift
-    | IAdminViewShifts
+    | ICreateShiftSubmit
+    | ICreateShiftSuccess
+    | ICreateShiftError
+    | ICreateShiftCancel
+    | IViewShifts
+    | IViewShiftsError
+    | IViewTimeoffs
+    | IViewTimeoffsError
     | Logout
-    | Users;
+    | Users
+    | IRequestTimeoff
+    | IRequestTimeoffsError;

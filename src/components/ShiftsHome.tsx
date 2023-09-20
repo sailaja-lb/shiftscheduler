@@ -1,29 +1,46 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Header from "./Header";
 import {useDispatch, useSelector} from "react-redux";
-import {ADMIN_VIEW_SHIFTS, CREATE_SHIFT} from "../state/schedulerTypes";
 import {AppState} from "../state";
 import CreateShift from "./CreateShift";
+import {createShift, viewAdminShifts, viewUserShifts} from "../state/schedulerActions";
+import ViewShifts from "./ViewShifts";
+
 function ShiftsHome() {
     const dispatch = useDispatch();
     const isCreateShift = useSelector((state: AppState) => state.schedulerState.isCreateShift);
+    const isAdminViewShifts = useSelector((state:AppState) => state.schedulerState.isAdminViewShifts);
+    const shifts = useSelector((state:AppState) => state.schedulerState.shifts);
+    const loggedInUser = useSelector((state:AppState) => state.schedulerState.loggedInUser);
 
+    useEffect(() => {
+        if (loggedInUser?.role !== 'admin') {
+            if (loggedInUser?.id) {
+                dispatch(viewUserShifts(loggedInUser?.id));
+            }
+        }
+    }, [dispatch, loggedInUser]);
     const showCreateShift = () => {
-        dispatch({type: CREATE_SHIFT})
+        dispatch(createShift());
     }
-    const showViewShifts = () => {
-        dispatch({type: ADMIN_VIEW_SHIFTS})
+    const showViewAdminShifts = () => {
+        dispatch(viewAdminShifts());
     }
 
     return (
         <>
             <Header />
             <main>
-                <div className="button-group">
-                    <button onClick={showCreateShift}>Create Shift</button>
-                    <button onClick={showViewShifts}>View Shifts</button>
-                </div>
-                {isCreateShift ? <CreateShift /> : null}
+                {loggedInUser ?
+                    loggedInUser?.role === 'admin' ? <>
+                        <div className="button-group">
+                            <button onClick={showCreateShift} className={isCreateShift ? 'primary' : ''}>Create Shift</button>
+                            <button onClick={showViewAdminShifts} className={isAdminViewShifts ? 'primary' : ''}>View Shifts</button>
+                        </div>
+                        {isCreateShift ? <CreateShift /> : null}
+                        {isAdminViewShifts ? <ViewShifts shifts={shifts} loggedInUser={loggedInUser} /> : null}
+                    </> : <ViewShifts shifts={shifts} loggedInUser={loggedInUser} />
+                    : null}
             </main>
         </>
     );

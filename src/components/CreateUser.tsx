@@ -45,20 +45,20 @@ function CreateUser() {
                     </div> ) : null}
                 <form className="input-group vertical" onSubmit={handleSubmit}>
                     <label htmlFor="name">First Name</label>
-                    <input type="text" name="firstName" value={firstName} placeholder="First Name" onChange={handleChange} />
+                    <input type="text" name="firstName" required={true} value={firstName} placeholder="First Name" onChange={handleChange} />
                     <label htmlFor="name">Last Name</label>
-                    <input type="text" name="lastName" value={lastName} placeholder="Last Name" onChange={handleChange} />
+                    <input type="text" name="lastName" required={true} value={lastName} placeholder="Last Name" onChange={handleChange} />
                     <label htmlFor="name">Username</label>
-                    <input type="text" name="username" value={username} placeholder="username" onChange={handleChange} />
+                    <input type="text" name="username" required={true} value={username} placeholder="username" onChange={handleChange} />
                     <label htmlFor="password">Password</label>
-                    <input type="password" name="password" value={password} placeholder="password" onChange={handleChange} />
+                    <input type="password" name="password" required={true} value={password} placeholder="password" onChange={handleChange} />
                     <label htmlFor="password">Role</label>
                     <div className="input-group">
                         <input type="radio" name="role" onChange={handleChange} value={"admin"} id={"roleadmin"} checked={role==='admin' ? true : false} /> <label htmlFor={"roleadmin"}>Admin</label>
                         <input type="radio" name="role" onChange={handleChange} value={"user"} id={"roleuser"} checked={role==='user' ? true : false} />  <label htmlFor={"roleuser"}>User</label>
                     </div>
                     <div className="input-group">
-                        <button className="primary bordered medium" type={"submit"} disabled={isCreateUserInProgress}>Create User</button>
+                        <button className="primary bordered medium" type={"submit"} disabled={isCreateUserInProgress}>Submit</button>
                         <button type="button" className="bordered medium" disabled={isCreateUserInProgress} onClick={handleCancel}>Cancel</button>
                     </div>
                 </form>

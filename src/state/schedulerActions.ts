@@ -1,16 +1,17 @@
 import {
-    CREATE_USER_ERROR, CREATE_USER_SUBMIT, CREATE_USER_SUCCESS,
     ICredentials,
-    IInitialState,
+    IInitialState, IShift,
     IUser,
+    VIEW_SHIFTS, VIEW_SHIFTS_ERROR,
+    CREATE_SHIFT, CREATE_SHIFT_ERROR, CREATE_SHIFT_SUCCESS,
+    CREATE_USER_ERROR, CREATE_USER_SUBMIT, CREATE_USER_SUCCESS,
     LOGIN_ERROR,
     LOGIN_START,
-    LOGIN_SUCCESS
+    LOGIN_SUCCESS, USERS, VIEW_TIMEOFFS, VIEW_TIMEOFFS_ERROR, REQUEST_TIMEOFF, REQUEST_TIMEOFF_ERROR
 } from "./schedulerTypes";
 import {ThunkDispatch} from "redux-thunk";
 import {Action} from "redux";
-//import {AppState} from "../state";
-import {usersAPI} from "../restAPI";
+import {shiftsAPI, timeoffAPI, usersAPI} from "../restAPI";
 
 export function loginUser(credentials: ICredentials): any {
     return function (dispatch:ThunkDispatch<IInitialState, null, Action<string>>) {
@@ -30,11 +31,63 @@ export function createUser(user: IUser): any {
     }
 }
 
-export function createShift(user: IUser): any {
+export function createShift(): any {
+    return function (dispatch:ThunkDispatch<IInitialState, null, Action<string>>) {
+        dispatch({type: CREATE_SHIFT});
+        return usersAPI.getAll()
+            .then(users => dispatch({type: USERS, payload: { users }}))
+            .catch(error => dispatch({type: USERS, payload: { users: [] }}))
+    }
+}
+
+export function submitShift(shift: IShift): any {
     return function (dispatch:ThunkDispatch<IInitialState, null, Action<string>>) {
         dispatch({type: CREATE_USER_SUBMIT});
-        return usersAPI.post(user)
-            .then(user => dispatch({type: CREATE_USER_SUCCESS}))
-            .catch(error => dispatch({type: CREATE_USER_ERROR, payload: {message: error.message}}))
+        return shiftsAPI.post(shift)
+            .then(shift => dispatch({type: CREATE_SHIFT_SUCCESS, payload: { submittedShift: shift }}))
+            .catch(error => dispatch({type: CREATE_SHIFT_ERROR, payload: { message: error.message }}))
+    }
+}
+export function viewAdminShifts(): any {
+    return function (dispatch:ThunkDispatch<IInitialState, null, Action<string>>) {
+        return shiftsAPI.getAll()
+            .then(shifts => dispatch({type: VIEW_SHIFTS, payload: { shifts }}))
+            .catch(error => dispatch({type: VIEW_SHIFTS_ERROR, payload: { message: error.message }}))
+    }
+}
+export function viewUserShifts(userId: number): any {
+    return function (dispatch:ThunkDispatch<IInitialState, null, Action<string>>) {
+        return shiftsAPI.getUserShifts(userId)
+            .then(shifts => dispatch({type: VIEW_SHIFTS, payload: { shifts }}))
+            .catch(error => dispatch({type: VIEW_SHIFTS_ERROR, payload: { message: error.message }}))
+    }
+}
+
+export function viewAllTimeoffs(): any {
+    return function (dispatch:ThunkDispatch<IInitialState, null, Action<string>>) {
+        return timeoffAPI.getAll()
+            .then(timeoffs => dispatch({type: VIEW_TIMEOFFS, payload: { timeoffs }}))
+            .catch(error => dispatch({type: VIEW_TIMEOFFS_ERROR, payload: { message: error.message }}))
+    }
+}
+
+export function viewUserTimeoffs(userId: number): any {
+    return function (dispatch:ThunkDispatch<IInitialState, null, Action<string>>) {
+        return timeoffAPI.getUserTimeoffs(userId)
+            .then(timeoffs => dispatch({type: VIEW_TIMEOFFS, payload: { timeoffs }}))
+            .catch(error => dispatch({type: VIEW_TIMEOFFS_ERROR, payload: { message: error.message }}))
+    }
+}
+export function requestTimeoff(userId: number): any {
+    return function (dispatch:ThunkDispatch<IInitialState, null, Action<string>>) {
+        return timeoffAPI.requestTimeoffs(userId)
+            .then(timeoffs => dispatch({type: REQUEST_TIMEOFF, payload: { timeoffs }}))
+            .catch(error => dispatch({type: REQUEST_TIMEOFF_ERROR, payload: { message: error.message }}))
+    }
+}
+export function viewAllUsers(): any {
+    return function (dispatch:ThunkDispatch<IInitialState, null, Action<string>>) {
+        return usersAPI.getAll()
+            .then(users => dispatch({type: USERS, payload: { users }}));
     }
 }

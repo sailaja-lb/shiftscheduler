@@ -1,4 +1,4 @@
-import {IUser} from "./state/schedulerTypes";
+import {IShift, ITimeoff, IUser} from "./state/schedulerTypes";
 
 const baseUrl = 'http://localhost:4000';
 
@@ -36,6 +36,7 @@ function parseJSON(response: Response) {
 }
 
 const usersAPI = {
+    // Login, Find user to authenticate
     find(username: string, password:string) {
         return fetch(`${baseUrl}/users?username=${username}&password=${password}`)
             .then(checkStatus("users"))
@@ -48,6 +49,7 @@ const usersAPI = {
                 }
             });
     },
+    // Create User
     post(user: IUser) {
         return fetch(`${baseUrl}/users`, {
             method: 'POST',
@@ -64,6 +66,7 @@ const usersAPI = {
                 );
             });
     },
+    // For Admin, get all users
     getAll() {
         return fetch(`${baseUrl}/users`)
             .then(checkStatus("users"))
@@ -73,20 +76,99 @@ const usersAPI = {
 };
 
 const shiftsAPI = {
-    // get(userId: number) {
-    //     return fetch(`${baseUrl}/shifts`)
-    //         .then(checkStatus("shifts"))
-    //         .then(parseJSON)
-    //         .catch((error: TypeError) => {
-    //             // console.log('log client error ' + error);
-    //             throw new Error(
-    //                 'There was an error retrieving the projects. Please try again.'
-    //             );
-    //         });
-    // },
+    // For Admin, Create Shift
+    post(shift: IShift) {
+        return fetch(`${baseUrl}/shifts`, {
+            method: 'POST',
+            body: JSON.stringify(shift),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(checkStatus("shifts"))
+            .then(parseJSON)
+            .catch((error: TypeError) => {
+                throw new Error(
+                    'There was an error creating the shift. Please try again.'
+                );
+            });
+    },
+    // For Admin, view all users shifts
+    getAll() {
+        return fetch(`${baseUrl}/shifts`)
+            .then(checkStatus("shifts"))
+            .then(parseJSON)
+            .catch((error: TypeError) => {
+                throw new Error(
+                    'There was an error retrieving the shifts. Please try again.'
+                );
+            });
+    },
+    // For user, view his shifts and available shifts (userId=0)
+    getUserShifts(userId: number) {
+        return fetch(`${baseUrl}/shifts?userId=${userId}&userId=0`)
+            .then(checkStatus("shifts"))
+            .then(parseJSON)
+            .catch((error: TypeError) => {
+                throw new Error(
+                    'There was an error retrieving the shifts. Please try again.'
+                );
+            });
+    }
 
 };
 
+const timeoffAPI = {
+    // Requesting time off
+    post(timeoff: ITimeoff) {
+        return fetch(`${baseUrl}/timeoff`, {
+            method: 'POST',
+            body: JSON.stringify(timeoff),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(checkStatus("timeoff"))
+            .then(parseJSON)
+            .catch((error: TypeError) => {
+                throw new Error(
+                    'There was an error requesting timeoff. Please try again.'
+                );
+            });
+    },
+    // For Admin, get all users timeoff
+    getAll() {
+        return fetch(`${baseUrl}/timeoff`)
+            .then(checkStatus("timeoff"))
+            .then(parseJSON)
+            .catch((error: TypeError) => {
+                throw new Error(
+                    'There was an error retrieving the timeoffs. Please try again.'
+                );
+            });
+    },
+    // For user login, get his timeoffs
+    getUserTimeoffs(userId: number) {
+        return fetch(`${baseUrl}/timeoff?userId=${userId}`)
+            .then(checkStatus("timeoff"))
+            .then(parseJSON)
+            .catch((error: TypeError) => {
+                throw new Error(
+                    'There was an error retrieving the timeoffs. Please try again.'
+                );
+            });
+    },
+    requestTimeoffs(userId: number) {
+        return fetch(`${baseUrl}/timeoff?userId=${userId}`)
+            .then(checkStatus("timeoff"))
+            .then(parseJSON)
+            .catch((error: TypeError) => {
+                throw new Error(
+                    'There was an error requesting the timeoffs. Please try again.'
+                );
+            });
+    }
 
+};
 
-export { usersAPI, shiftsAPI };
+export { usersAPI, shiftsAPI, timeoffAPI };

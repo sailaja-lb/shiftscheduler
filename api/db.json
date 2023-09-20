@@ -31,6 +31,14 @@
       "password": "three",
       "role": "user",
       "id": 4
+    },
+    {
+      "firstName": "two",
+      "lastName": "two",
+      "username": "two",
+      "password": "two",
+      "role": "user",
+      "id": 5
     }
   ],
   "shifts": [
@@ -39,12 +47,36 @@
       "title": "Shift 1",
       "date": "2023-09-15T03:13:00.076Z",
       "userId": 1
+    },
+    {
+      "title": "shift2",
+      "date": "2023-09-19T17:03",
+      "id": 2,
+      "userId": 2
+    },
+    {
+      "title": "shift2",
+      "date": "2023-09-19T17:05",
+      "id": 3,
+      "userId": 0
+    },
+    {
+      "title": "shift2",
+      "date": "2023-09-19T17:07",
+      "id": 4,
+      "userId": 0
     }
   ],
-  "timeOff": [
+  "timeoff": [
     {
       "date": "2023-09-16T03:13:00.076Z",
-      "userId": 1
+      "userId": 1,
+      "status": "approved"
+    },
+    {
+      "date": "2023-09-17T03:13:00.076Z",
+      "userId": 2,
+      "status": "pending"
     }
   ]
 }

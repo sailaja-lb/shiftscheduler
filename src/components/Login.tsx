@@ -11,7 +11,7 @@ function Login() {
     const loginDisabled: boolean = useSelector((state: AppState) => state.schedulerState.loginDisabled);
     const loginErrorMessage: string = useSelector((state: AppState) => state.schedulerState.loginErrorMessage);
 
-    const handleChange = (event: any) => {
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target;
         const changeValue = {
             [name]: value
@@ -19,7 +19,7 @@ function Login() {
         dispatch({type: UPDATE_CREDENTIALS, payload: {credentials: {username, password, ...changeValue}}});
     };
 
-    const handleSubmit = (event: any) => {
+    const handleSubmit = (event: React.SyntheticEvent<HTMLFormElement>) => {
         event.preventDefault();
         dispatch(loginUser({ username, password }))
     }
@@ -37,7 +37,7 @@ function Login() {
                 <input type="text" id="username" name="username" placeholder="username" value={username} required={true} onChange={handleChange} />
                 <label htmlFor="password">Password</label>
                 <input name="password" id="password" placeholder="password" type={"password"} value={password} required={true} onChange={handleChange} />
-                <div className="input-group">
+                <div className="input-group-vertical">
                     <button className="primary bordered medium" type={"submit"} disabled={loginDisabled}>Login</button>
                 </div>
             </form>
