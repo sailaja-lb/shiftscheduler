@@ -58,25 +58,50 @@
       "title": "shift2",
       "date": "2023-09-19T17:05",
       "id": 3,
-      "userId": 0
+      "userId": 2
     },
     {
       "title": "shift2",
       "date": "2023-09-19T17:07",
       "id": 4,
-      "userId": 0
+      "userId": 3
     }
   ],
   "timeoff": [
     {
-      "date": "2023-09-16T03:13:00.076Z",
+      "id": 1,
+      "date": "2023-09-16T17:05",
+      "endDate": "2023-09-17T17:05",
       "userId": 1,
       "status": "approved"
     },
     {
-      "date": "2023-09-17T03:13:00.076Z",
+      "id": 2,
+      "date": "2023-09-17T17:05",
+      "endDate": "2023-09-18T17:05",
       "userId": 2,
-      "status": "pending"
+      "status": "approved"
+    },
+    {
+      "date": "2023-09-20T22:20",
+      "endDate": "2023-09-21T22:20",
+      "status": "deny",
+      "userId": 2,
+      "id": 3
+    },
+    {
+      "date": "2023-09-21T08:25",
+      "endDate": "2023-09-23T08:25",
+      "status": "pending",
+      "userId": 3,
+      "id": 4
+    },
+    {
+      "date": "2023-09-23T08:27",
+      "endDate": "2023-09-25T08:27",
+      "status": "pending",
+      "userId": 2,
+      "id": 5
     }
   ]
 }

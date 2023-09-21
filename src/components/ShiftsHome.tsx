@@ -20,6 +20,7 @@ function ShiftsHome() {
             }
         }
     }, [dispatch, loggedInUser]);
+
     const showCreateShift = () => {
         dispatch(createShift());
     }

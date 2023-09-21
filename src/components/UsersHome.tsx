@@ -24,6 +24,7 @@ function UsersHome() {
                         <th>id</th>
                         <th>Name</th>
                         <th>User Name</th>
+                        <th>Role</th>
                     </thead>
                     <tbody>
                         {users.map((user, index) => (
@@ -31,6 +32,7 @@ function UsersHome() {
                                 <td>{user.id}</td>
                                 <td>{user.firstName} {user.lastName}</td>
                                 <td>{user.username}</td>
+                                <td>{user.role}</td>
                             </tr>
                         ))}
                     </tbody>

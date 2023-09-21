@@ -1,13 +1,26 @@
 import {
     ICredentials,
-    IInitialState, IShift,
+    IInitialState,
+    IShift,
     IUser,
-    VIEW_SHIFTS, VIEW_SHIFTS_ERROR,
-    CREATE_SHIFT, CREATE_SHIFT_ERROR, CREATE_SHIFT_SUCCESS,
-    CREATE_USER_ERROR, CREATE_USER_SUBMIT, CREATE_USER_SUCCESS,
+    VIEW_SHIFTS,
+    VIEW_SHIFTS_ERROR,
+    CREATE_SHIFT,
+    CREATE_SHIFT_ERROR,
+    CREATE_SHIFT_SUCCESS,
+    CREATE_USER_ERROR,
+    CREATE_USER_SUBMIT,
+    CREATE_USER_SUCCESS,
     LOGIN_ERROR,
     LOGIN_START,
-    LOGIN_SUCCESS, USERS, VIEW_TIMEOFFS, VIEW_TIMEOFFS_ERROR, REQUEST_TIMEOFF, REQUEST_TIMEOFF_ERROR
+    LOGIN_SUCCESS,
+    USERS,
+    VIEW_TIMEOFFS,
+    VIEW_TIMEOFFS_ERROR,
+    REQUEST_TIMEOFF,
+    REQUEST_TIMEOFF_ERROR,
+    ITimeoff,
+    REQUEST_TIMEOFF_SUCCESS, TIMEOFF_UPDATE_STATUS, ACCEPT_AVAILABLE_SHIFT
 } from "./schedulerTypes";
 import {ThunkDispatch} from "redux-thunk";
 import {Action} from "redux";
@@ -78,16 +91,36 @@ export function viewUserTimeoffs(userId: number): any {
             .catch(error => dispatch({type: VIEW_TIMEOFFS_ERROR, payload: { message: error.message }}))
     }
 }
-export function requestTimeoff(userId: number): any {
-    return function (dispatch:ThunkDispatch<IInitialState, null, Action<string>>) {
-        return timeoffAPI.requestTimeoffs(userId)
-            .then(timeoffs => dispatch({type: REQUEST_TIMEOFF, payload: { timeoffs }}))
-            .catch(error => dispatch({type: REQUEST_TIMEOFF_ERROR, payload: { message: error.message }}))
-    }
-}
+// // User, request time off
+// export function requestTimeoff(userId: number): any {
+//     return function (dispatch:ThunkDispatch<IInitialState, null, Action<string>>) {
+//         return timeoffAPI.requestTimeoffs(userId)
+//             .then(timeoffs => dispatch({type: REQUEST_TIMEOFF, payload: { timeoffs }}))
+//             .catch(error => dispatch({type: REQUEST_TIMEOFF_ERROR, payload: { message: error.message }}))
+//     }
+// }
 export function viewAllUsers(): any {
     return function (dispatch:ThunkDispatch<IInitialState, null, Action<string>>) {
         return usersAPI.getAll()
             .then(users => dispatch({type: USERS, payload: { users }}));
+    }
+}
+//
+export function submitRequestTimeoff(timeoff: ITimeoff): any {
+    return function (dispatch:ThunkDispatch<IInitialState, null, Action<string>>) {
+        return timeoffAPI.post(timeoff)
+            .then(newTimeoff => dispatch({type: REQUEST_TIMEOFF_SUCCESS, payload: { timeoff: newTimeoff }}));
+    }
+}
+export function updateRequestTimeoff(timeoff: ITimeoff): any {
+    return function (dispatch:ThunkDispatch<IInitialState, null, Action<string>>) {
+        return timeoffAPI.put(timeoff)
+            .then(newTimeoff => dispatch({type: TIMEOFF_UPDATE_STATUS, payload: { timeoff: newTimeoff }}));
+    }
+}
+export function updateShift(shift: IShift): any {
+    return function (dispatch:ThunkDispatch<IInitialState, null, Action<string>>) {
+        return shiftsAPI.put(shift)
+            .then(updatedShift => dispatch({type: ACCEPT_AVAILABLE_SHIFT, payload: { updatedShift }}));
     }
 }

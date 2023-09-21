@@ -93,6 +93,23 @@ const shiftsAPI = {
                 );
             });
     },
+    // For user, accept timeoff
+    put(shift: IShift) {
+        return fetch(`${baseUrl}/shifts/${shift.id}`, {
+            method: 'PUT',
+            body: JSON.stringify(shift),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(checkStatus("shifts"))
+            .then(parseJSON)
+            .catch((error: TypeError) => {
+                throw new Error(
+                    'There was an error creating the shift. Please try again.'
+                );
+            });
+    },
     // For Admin, view all users shifts
     getAll() {
         return fetch(`${baseUrl}/shifts`)
@@ -119,10 +136,27 @@ const shiftsAPI = {
 };
 
 const timeoffAPI = {
-    // Requesting time off
+    // Submitting request timeoff
     post(timeoff: ITimeoff) {
         return fetch(`${baseUrl}/timeoff`, {
             method: 'POST',
+            body: JSON.stringify(timeoff),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(checkStatus("timeoff"))
+            .then(parseJSON)
+            .catch((error: TypeError) => {
+                throw new Error(
+                    'There was an error requesting timeoff. Please try again.'
+                );
+            });
+    },
+    // Updating timeoff
+    put(timeoff: ITimeoff) {
+        return fetch(`${baseUrl}/timeoff/${timeoff.id}`, {
+            method: 'PUT',
             body: JSON.stringify(timeoff),
             headers: {
                 'Content-Type': 'application/json'

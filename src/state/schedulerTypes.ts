@@ -1,4 +1,5 @@
 //action types
+
 export const UPDATE_CREDENTIALS = 'UPDATE_CREDENTIALS'
 export const LOGIN_START = 'LOGIN_START'
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
@@ -20,8 +21,10 @@ export const VIEW_SHIFTS_ERROR = 'VIEW_SHIFTS_ERROR';
 export const VIEW_TIMEOFFS = 'VIEW_TIMEOFFS';
 export const VIEW_TIMEOFFS_ERROR = 'VIEW_TIMEOFFS_ERROR';
 export const REQUEST_TIMEOFF = 'REQUEST_TIMEOFF';
+export const REQUEST_TIMEOFF_SUCCESS = 'REQUEST_TIMEOFF_SUCCESS';
 export const REQUEST_TIMEOFF_ERROR = 'REQUEST_TIMEOFF_ERROR';
-
+export const TIMEOFF_UPDATE_STATUS = 'TIMEOFF_UPDATE_STATUS';
+export const ACCEPT_AVAILABLE_SHIFT = 'ACCEPT_AVAILABLE_SHIFT';
 
 // User type
 export interface IUser {
@@ -44,7 +47,9 @@ export interface IShift {
 }
 
 export interface ITimeoff {
+    id?: number;
     date: string;
+    endDate: string;
     userId: number;
     status: string;
 }
@@ -121,6 +126,7 @@ export interface ICreateShiftSuccess {
 }
 export interface ICreateShiftError {
     type: typeof CREATE_SHIFT_ERROR;
+    //why no payload
 }
 export interface ICreateShiftCancel {
     type: typeof CREATE_SHIFT_CANCEL;
@@ -149,12 +155,25 @@ export interface IRequestTimeoffsError {
     type: typeof REQUEST_TIMEOFF_ERROR;
     payload: { message: string }
 }
+export interface IRequestTimeoffSuccess {
+    type: typeof REQUEST_TIMEOFF_SUCCESS;
+    payload: { timeoff: ITimeoff }
+}
+export interface ITimeoffUpdateStatus {
+    type: typeof TIMEOFF_UPDATE_STATUS;
+    payload: { timeoff: ITimeoff };
+}
 interface Logout {
     type: typeof LOGOUT;
 }
 export interface Users {
     type: typeof USERS;
     payload: { users: IUser[] };
+}
+
+export interface IAcceptAvailableShift {
+    type: typeof ACCEPT_AVAILABLE_SHIFT;
+    payload: { updatedShift: IShift }
 }
 
 export type ActionTypes =
@@ -179,4 +198,7 @@ export type ActionTypes =
     | Logout
     | Users
     | IRequestTimeoff
+    | IRequestTimeoffSuccess
+    | ITimeoffUpdateStatus
+    | IAcceptAvailableShift
     | IRequestTimeoffsError;

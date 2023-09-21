@@ -1,4 +1,5 @@
 import {
+    ACCEPT_AVAILABLE_SHIFT,
     ActionTypes,
     CREATE_SHIFT,
     CREATE_SHIFT_CANCEL,
@@ -10,24 +11,28 @@ import {
     CREATE_USER_SUBMIT,
     CREATE_USER_SUCCESS,
     IInitialState,
-    IShift, ITimeoff,
+    IShift,
+    ITimeoff,
     IUser,
     LOGIN_ERROR,
     LOGIN_START,
     LOGIN_SUCCESS,
     LOGOUT,
+    REQUEST_TIMEOFF,
+    REQUEST_TIMEOFF_ERROR,
+    REQUEST_TIMEOFF_SUCCESS,
+    TIMEOFF_UPDATE_STATUS,
     UPDATE_CREDENTIALS,
     USERS,
     VIEW_SHIFTS,
     VIEW_SHIFTS_ERROR,
-    VIEW_TIMEOFFS, VIEW_TIMEOFFS_ERROR,
-    REQUEST_TIMEOFF,REQUEST_TIMEOFF_ERROR
-
-
+    VIEW_TIMEOFFS,
+    VIEW_TIMEOFFS_ERROR
 } from './schedulerTypes';
 
 export const newUserModel: IUser = { firstName: "", lastName: "", username: "", password: "", role:  "user"};
 export const newShiftModel: IShift = { title: "", date: "" };
+export const newTimeoffModel: ITimeoff = { date: "", endDate: "", status: "pending", userId: 0 };
 
 export const initialState: IInitialState = {
     users: [],
@@ -49,7 +54,7 @@ export const initialState: IInitialState = {
     isCreateShift: false,
     isAdminViewShifts: false,
     newShift: {...newShiftModel},
-    newTimeoff: {date:"", status:"pending", userId:0},
+    newTimeoff: {...newTimeoffModel},
     isCreateShiftInProgress: false,
     isRequestTimeoff: false
 };
@@ -187,7 +192,14 @@ export function schedulerReducer(
             return {
                 ...state,
                 isRequestTimeoff: true,
-                newTimeoff: action.payload ? action.payload.newTimeoff : {date:"", status:"pending", userId:0}
+                newTimeoff: action.payload.newTimeoff
+            };
+        case REQUEST_TIMEOFF_SUCCESS:
+            return {
+                ...state,
+                isRequestTimeoff: true,
+                timeoffs: [...state.timeoffs, action.payload.timeoff],
+                newTimeoff: {...newTimeoffModel}
             };
         case REQUEST_TIMEOFF_ERROR:
             return {
@@ -195,6 +207,26 @@ export function schedulerReducer(
                 errorMessage: action.payload.message,
                 //timeoffs: []
             };
+        case TIMEOFF_UPDATE_STATUS:
+            return {
+                ...state,
+                timeoffs: state.timeoffs.map(timeo => {
+                    if (timeo.id === action.payload.timeoff.id) {
+                        return action.payload.timeoff;
+                    }
+                    return timeo;
+                })
+            };
+        case ACCEPT_AVAILABLE_SHIFT:
+            return {
+                ...state,
+                shifts: state.shifts.map(each => {
+                    if (each.id === action.payload.updatedShift.id) {
+                        return action.payload.updatedShift;
+                    }
+                    return each;
+                })
+            }
         default:
             return state;
 
