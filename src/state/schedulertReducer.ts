@@ -31,8 +31,8 @@ import {
 } from './schedulerTypes';
 
 export const newUserModel: IUser = { firstName: "", lastName: "", username: "", password: "", role:  "user"};
-export const newShiftModel: IShift = { title: "", date: "" };
-export const newTimeoffModel: ITimeoff = { date: "", endDate: "", status: "pending", userId: 0 };
+export const newShiftModel: IShift = { title: "", date: "", endDate: "" };
+export const newTimeoffModel: ITimeoff = { username :"", date: "", endDate: "", status: "pending", userId: 0 };
 
 export const initialState: IInitialState = {
     users: [],

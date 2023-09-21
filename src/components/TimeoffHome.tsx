@@ -5,6 +5,7 @@ import Header from "./Header";
 import ViewTimeoff from "./ViewTimeoff";
 import { submitRequestTimeoff, viewAllTimeoffs, viewUserTimeoffs} from "../state/schedulerActions";
 import { ITimeoff, IUser, REQUEST_TIMEOFF} from "../state/schedulerTypes";
+import ViewRequestTimeOff from "./ViewRequestTimeOff";
 
 function TimeoffHome() {
     const dispatch = useDispatch();
@@ -23,17 +24,17 @@ function TimeoffHome() {
         }
     }, [dispatch, loggedInUser]);
 
-    const handleRequestTimeoffChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-        const { name, value } = event.target;
-        const changedValue = {
-            [name]: value
-        };
-        dispatch({type: REQUEST_TIMEOFF, payload: { newTimeoff: {...newTimeoff, userId: loggedInUser?.id, ...changedValue} }});
-    }
-    const handleRequestTimeoffSubmit = (event: React.SyntheticEvent<HTMLFormElement>) : void  => {
-        event.preventDefault();
-        dispatch(submitRequestTimeoff(newTimeoff));
-    }
+    // const handleRequestTimeoffChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    //     const { name, value } = event.target;
+    //     const changedValue = {
+    //         [name]: value
+    //     };
+    //     dispatch({type: REQUEST_TIMEOFF, payload: { newTimeoff: {...newTimeoff, userId: loggedInUser?.id, ...changedValue} }});
+    // }
+    // const handleRequestTimeoffSubmit = (event: React.SyntheticEvent<HTMLFormElement>) : void  => {
+    //     event.preventDefault();
+    //     dispatch(submitRequestTimeoff(newTimeoff));
+    // }
 
     return (
         <>
@@ -41,27 +42,52 @@ function TimeoffHome() {
             <main>
                     {loggedInUser ?
                         (loggedInUser?.role === 'admin' ?
-                            <ViewTimeoff timeoffs={timeoffs} loggedInUser={loggedInUser} /> :
                             <>
-                                <label htmlFor="modal-control" className={"button"}>Request Time off</label>
-                                <input type="checkbox" id="modal-control" className="modal" />
-                                <div role="dialog" aria-labelledby="dialog-title">
-                                    <div className="card">
-                                        <label htmlFor="modal-control" className="modal-close"></label>
-                                        <h3 className="section" id="dialog-title">Request Time off</h3>
-                                        <div>
-                                            <form className="input-group vertical" onSubmit={handleRequestTimeoffSubmit}>
-                                                <label htmlFor="startdate">Start Date</label>
-                                                <input type="datetime-local" name="date" value={startDate} required={true} onChange={handleRequestTimeoffChange} />
-                                                <label htmlFor="startdate">End Date</label>
-                                                <input type="datetime-local" name="endDate" value={endDate} required={true} onChange={handleRequestTimeoffChange} />
-                                                <div className="input-group">
-                                                    <button className="primary bordered medium modal-" type={"submit"}>Submit</button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
+                                <ViewRequestTimeOff />
+                            <ViewTimeoff timeoffs={timeoffs} loggedInUser={loggedInUser} />
+                                {/*<label htmlFor="modal-control" className={"button"}>Request Time off</label>*/}
+                                {/*<input type="checkbox" id="modal-control" className="modal" />*/}
+                                {/*<div role="dialog" aria-labelledby="dialog-title">*/}
+                                {/*    <div className="card">*/}
+                                {/*        <label htmlFor="modal-control" className="modal-close"></label>*/}
+                                {/*        <h3 className="section" id="dialog-title">Request Time off</h3>*/}
+                                {/*        <div>*/}
+                                {/*            <form className="input-group vertical" onSubmit={handleRequestTimeoffSubmit}>*/}
+                                {/*                <label htmlFor="startdate">Start Date</label>*/}
+                                {/*                <input type="datetime-local" name="date" value={startDate} required={true} onChange={handleRequestTimeoffChange} />*/}
+                                {/*                <label htmlFor="startdate">End Date</label>*/}
+                                {/*                <input type="datetime-local" name="endDate" value={endDate} required={true} onChange={handleRequestTimeoffChange} />*/}
+                                {/*                <div className="input-group">*/}
+                                {/*                    <button className="primary bordered medium modal-" type={"submit"}>Submit</button>*/}
+                                {/*                </div>*/}
+                                {/*            </form>*/}
+                                {/*        </div>*/}
+                                {/*    </div>*/}
+                                {/*</div>*/}
+
+                            </>
+                            :
+                            <>
+                                {/*<label htmlFor="modal-control" className={"button"}>Request Time off</label>*/}
+                                {/*<input type="checkbox" id="modal-control" className="modal" />*/}
+                                {/*<div role="dialog" aria-labelledby="dialog-title">*/}
+                                {/*    <div className="card">*/}
+                                {/*        <label htmlFor="modal-control" className="modal-close"></label>*/}
+                                {/*        <h3 className="section" id="dialog-title">Request Time off</h3>*/}
+                                {/*        <div>*/}
+                                {/*            <form className="input-group vertical" onSubmit={handleRequestTimeoffSubmit}>*/}
+                                {/*                <label htmlFor="startdate">Start Date</label>*/}
+                                {/*                <input type="datetime-local" name="date" value={startDate} required={true} onChange={handleRequestTimeoffChange} />*/}
+                                {/*                <label htmlFor="startdate">End Date</label>*/}
+                                {/*                <input type="datetime-local" name="endDate" value={endDate} required={true} onChange={handleRequestTimeoffChange} />*/}
+                                {/*                <div className="input-group">*/}
+                                {/*                    <button className="primary bordered medium modal-" type={"submit"}>Submit</button>*/}
+                                {/*                </div>*/}
+                                {/*            </form>*/}
+                                {/*        </div>*/}
+                                {/*    </div>*/}
+                                {/*</div>*/}
+                                <ViewRequestTimeOff />
                                 <ViewTimeoff timeoffs={timeoffs} loggedInUser={loggedInUser}/>
                             </>) :
                         null

@@ -27,7 +27,8 @@ function ViewTimeoff(props: propsViewTimeoff) {
             <table>
                 <thead>
                     <tr>
-                        <th>User</th>
+                        <th>UserID</th>
+                        <th>User name</th>
                         <th>Start Date</th>
                         <th>End Date</th>
                         <th>Status</th>
@@ -38,6 +39,7 @@ function ViewTimeoff(props: propsViewTimeoff) {
                 {timeoffs.map((timeoff: ITimeoff, index) => (
                         <tr key={index}>
                             <td>{timeoff.userId}</td>
+                            <td>{timeoff.username}</td>
                             <td>{new Date(timeoff.date).toLocaleString()}</td>
                             <td>{new Date(timeoff.endDate).toLocaleString()}</td>
                             <td>{timeoff.status}</td>

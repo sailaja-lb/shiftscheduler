@@ -30,7 +30,8 @@ function ViewShifts(props: propsViewShifts) {
                     <tr>
                         <th>Id</th>
                         <th>Title</th>
-                        <th>Date</th>
+                        <th>Start Time</th>
+                        <th>End time</th>
                         <th>Assigned user</th>
                         <th>Actions</th>
                     </tr>
@@ -41,6 +42,7 @@ function ViewShifts(props: propsViewShifts) {
                             <td>{shift.id}</td>
                             <td>{shift.title}</td>
                             <td>{new Date(shift.date).toLocaleString()}</td>
+                            <td>{new Date(shift.endDate).toLocaleString()}</td>
                             <td>{shift.userId}</td>
                             <td>
                                 {role === 'user' && shift.userId === loggedInUserId ? <button>Request</button> : null}

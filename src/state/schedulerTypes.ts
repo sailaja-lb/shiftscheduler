@@ -43,11 +43,13 @@ export interface IShift {
     id?: number;
     title: string;
     date: string;
+    endDate: string;
     userId?: number;
 }
 
 export interface ITimeoff {
     id?: number;
+    username : string;
     date: string;
     endDate: string;
     userId: number;
