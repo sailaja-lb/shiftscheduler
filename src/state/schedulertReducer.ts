@@ -28,7 +28,7 @@ import {
     VIEW_SHIFTS_ERROR,
     VIEW_TIMEOFFS,
     VIEW_TIMEOFFS_ERROR,
-    REQUEST_SHIFT_TAKEOVER
+    REQUEST_SHIFT_TAKEOVER, ASSIGN_SHIFT_TO_OTHER
 } from './schedulerTypes';
 
 export const newUserModel: IUser = { firstName: "", lastName: "", username: "", password: "", role:  "user"};

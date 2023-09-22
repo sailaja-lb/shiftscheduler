@@ -71,14 +71,14 @@
       "title": "afternoon shift",
       "date": "2023-09-21T02:18",
       "endDate": "2023-09-21T04:23",
-      "userId": 0,
+      "userId": 1,
       "id": 5
     },
     {
       "title": "afternoon shift",
       "date": "2023-09-21T02:18",
       "endDate": "2023-09-21T04:23",
-      "userId": 0,
+      "userId": 2,
       "id": 6
     },
     {
@@ -92,7 +92,7 @@
       "title": "afternoon shift",
       "date": "2023-09-21T02:18",
       "endDate": "2023-09-21T04:23",
-      "userId": 0,
+      "userId": 4,
       "id": 8
     },
     {
@@ -194,6 +194,14 @@
       "status": "pending",
       "userId": 2,
       "id": 7
+    },
+    {
+      "username": "",
+      "date": "2023-09-22T22:41",
+      "endDate": "2023-09-22T22:41",
+      "status": "pending",
+      "userId": 1,
+      "id": 8
     }
   ]
 }

@@ -1,5 +1,7 @@
 //action types
 
+import exp from "constants";
+
 export const UPDATE_CREDENTIALS = 'UPDATE_CREDENTIALS'
 export const LOGIN_START = 'LOGIN_START'
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
@@ -26,8 +28,7 @@ export const REQUEST_TIMEOFF_ERROR = 'REQUEST_TIMEOFF_ERROR';
 export const TIMEOFF_UPDATE_STATUS = 'TIMEOFF_UPDATE_STATUS';
 export const ACCEPT_AVAILABLE_SHIFT = 'ACCEPT_AVAILABLE_SHIFT';
 export const REQUEST_SHIFT_TAKEOVER = 'REQUEST_SHIFT_TAKEOVER';
-
-
+export const ASSIGN_SHIFT_TO_OTHER = 'ASSIGN_SHIFT_TO_OTHER';
 
 //an interface is an abstract type that tells the compiler which property names a given object can have.
 // TypeScript creates implicit interfaces when you define an object with properties.
@@ -186,6 +187,9 @@ export interface IRequestShiftTakeover {
     type: typeof REQUEST_SHIFT_TAKEOVER;
     payload: { updatedShift: IShift };
 }
+export interface IAssignShiftToOther {
+    type: typeof ASSIGN_SHIFT_TO_OTHER
+}
 
 export type ActionTypes =
     | IUpdateCredentials
@@ -213,5 +217,6 @@ export type ActionTypes =
     | ITimeoffUpdateStatus
     | IAcceptAvailableShift
     | IRequestShiftTakeover
+    | IAssignShiftToOther
     | IRequestTimeoffsError;
 

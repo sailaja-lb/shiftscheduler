@@ -21,10 +21,12 @@ function UsersHome() {
             <main>
                 <table>
                     <thead>
-                        <th>id</th>
-                        <th>Name</th>
-                        <th>User Name</th>
-                        <th>Role</th>
+                        <tr>
+                            <th>id</th>
+                            <th>Name</th>
+                            <th>User Name</th>
+                            <th>Role</th>
+                        </tr>
                     </thead>
                     <tbody>
                         {users.map((user, index) => (

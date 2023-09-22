@@ -3,7 +3,7 @@ import Header from "./Header";
 import {useDispatch, useSelector} from "react-redux";
 import {AppState} from "../state";
 import CreateShift from "./CreateShift";
-import {createShift, viewAdminShifts, viewUserShifts} from "../state/schedulerActions";
+import {createShift, viewAdminShifts, viewAllUsers, viewUserShifts} from "../state/schedulerActions";
 import ViewShifts from "./ViewShifts";
 
 function ShiftsHome() {
@@ -11,6 +11,7 @@ function ShiftsHome() {
     const isCreateShift = useSelector((state: AppState) => state.schedulerState.isCreateShift);
     const isAdminViewShifts = useSelector((state:AppState) => state.schedulerState.isAdminViewShifts);
     const shifts = useSelector((state:AppState) => state.schedulerState.shifts);
+    const users = useSelector((state:AppState) => state.schedulerState.users);
     const loggedInUser = useSelector((state:AppState) => state.schedulerState.loggedInUser);
 
     useEffect(() => {
@@ -20,6 +21,10 @@ function ShiftsHome() {
             }
         }
     }, [dispatch, loggedInUser]);
+
+    useEffect(() => {
+        dispatch(viewAllUsers())
+    }, [users.length === 0]);
 
     const showCreateShift = () => {
         dispatch(createShift());
@@ -40,7 +45,7 @@ function ShiftsHome() {
                             <button onClick={showViewAdminShifts} className={isAdminViewShifts ? 'primary' : ''}>View Shifts</button>
                         </div>
                         {isCreateShift ? <CreateShift /> : null}
-                        {isAdminViewShifts ? <ViewShifts shifts={shifts} loggedInUser={loggedInUser} /> : null}
+                        {isAdminViewShifts ? <ViewShifts shifts={shifts} loggedInUser={loggedInUser} users={users} /> : null}
                         </>
                         : <ViewShifts shifts={shifts} loggedInUser={loggedInUser} />
                     : null}

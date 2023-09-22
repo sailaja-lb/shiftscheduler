@@ -9,7 +9,6 @@ import {AppState} from "../state";
 function ViewRequestTimeOff() {
     const dispatch = useDispatch();
     const loggedInUser: IUser | null = useSelector((state:AppState) => state.schedulerState.loggedInUser);
-    const timeoffs: ITimeoff[] = useSelector((state:AppState) => state.schedulerState.timeoffs);
     const newTimeoff: ITimeoff = useSelector((state: AppState) => state.schedulerState.newTimeoff);
     const { date: startDate, endDate } = newTimeoff;
 
@@ -37,30 +36,27 @@ function ViewRequestTimeOff() {
     }
 
     return (
-        <main>
-                     <>
-                         <label htmlFor="modal-control" className={"button"}>Request Time off</label>
-                        <input type="checkbox" id="modal-control" className="modal" />
-                        <div role="dialog" aria-labelledby="dialog-title">
-                            <div className="card">
-                                <label htmlFor="modal-control" className="modal-close"></label>
-                                <h3 className="section" id="dialog-title">Request Time off</h3>
-                                <div>
-                                    <form className="input-group vertical" onSubmit={handleRequestTimeoffSubmit}>
-                                        <label htmlFor="startdate">Start Date</label>
-                                        <input type="datetime-local" name="date" value={startDate} required={true} onChange={handleRequestTimeoffChange} />
-                                        <label htmlFor="startdate">End Date</label>
-                                        <input type="datetime-local" name="endDate" value={endDate} required={true} onChange={handleRequestTimeoffChange} />
-                                        <div className="input-group">
-                                            <button className="primary bordered medium modal-" type={"submit"}>Submit</button>
-                                        </div>
-                                    </form>
+            <main>
+                <label htmlFor="modal-control" className={"button"}>Request Time off</label>
+                <input type="checkbox" id="modal-control" className="modal" />
+                <div role="dialog" aria-labelledby="dialog-title">
+                    <div className="card">
+                        <label htmlFor="modal-control" className="modal-close"></label>
+                        <h3 className="section" id="dialog-title">Request Time off</h3>
+                        <div>
+                            <form className="input-group vertical" onSubmit={handleRequestTimeoffSubmit}>
+                                <label htmlFor="startdate">Start Date</label>
+                                <input type="datetime-local" name="date" value={startDate} required={true} onChange={handleRequestTimeoffChange} />
+                                <label htmlFor="startdate">End Date</label>
+                                <input type="datetime-local" name="endDate" value={endDate} required={true} onChange={handleRequestTimeoffChange} />
+                                <div className="input-group">
+                                    <button className="primary bordered medium modal-" type={"submit"}>Submit</button>
                                 </div>
-                            </div>
+                            </form>
                         </div>
-                    </>
-
-        </main>
-);
+                    </div>
+                </div>
+            </main>
+    );
 }
 export default ViewRequestTimeOff;
