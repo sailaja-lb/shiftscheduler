@@ -33,14 +33,16 @@ function ShiftsHome() {
             <Header />
             <main>
                 {loggedInUser ?
-                    loggedInUser?.role === 'admin' ? <>
+                    loggedInUser?.role === 'admin' ?
+                        <>
                         <div className="button-group">
                             <button onClick={showCreateShift} className={isCreateShift ? 'primary' : ''}>Create Shift</button>
                             <button onClick={showViewAdminShifts} className={isAdminViewShifts ? 'primary' : ''}>View Shifts</button>
                         </div>
                         {isCreateShift ? <CreateShift /> : null}
                         {isAdminViewShifts ? <ViewShifts shifts={shifts} loggedInUser={loggedInUser} /> : null}
-                    </> : <ViewShifts shifts={shifts} loggedInUser={loggedInUser} />
+                        </>
+                        : <ViewShifts shifts={shifts} loggedInUser={loggedInUser} />
                     : null}
             </main>
         </>

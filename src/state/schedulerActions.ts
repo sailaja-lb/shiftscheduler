@@ -20,7 +20,7 @@ import {
     REQUEST_TIMEOFF,
     REQUEST_TIMEOFF_ERROR,
     ITimeoff,
-    REQUEST_TIMEOFF_SUCCESS, TIMEOFF_UPDATE_STATUS, ACCEPT_AVAILABLE_SHIFT
+    REQUEST_TIMEOFF_SUCCESS, TIMEOFF_UPDATE_STATUS, ACCEPT_AVAILABLE_SHIFT, REQUEST_SHIFT_TAKEOVER
 } from "./schedulerTypes";
 import {ThunkDispatch} from "redux-thunk";
 import {Action} from "redux";
@@ -91,14 +91,7 @@ export function viewUserTimeoffs(userId: number): any {
             .catch(error => dispatch({type: VIEW_TIMEOFFS_ERROR, payload: { message: error.message }}))
     }
 }
-// // User, request time off
-// export function requestTimeoff(userId: number): any {
-//     return function (dispatch:ThunkDispatch<IInitialState, null, Action<string>>) {
-//         return timeoffAPI.requestTimeoffs(userId)
-//             .then(timeoffs => dispatch({type: REQUEST_TIMEOFF, payload: { timeoffs }}))
-//             .catch(error => dispatch({type: REQUEST_TIMEOFF_ERROR, payload: { message: error.message }}))
-//     }
-// }
+
 export function viewAllUsers(): any {
     return function (dispatch:ThunkDispatch<IInitialState, null, Action<string>>) {
         return usersAPI.getAll()
@@ -122,5 +115,11 @@ export function updateShift(shift: IShift): any {
     return function (dispatch:ThunkDispatch<IInitialState, null, Action<string>>) {
         return shiftsAPI.put(shift)
             .then(updatedShift => dispatch({type: ACCEPT_AVAILABLE_SHIFT, payload: { updatedShift }}));
+    }
+}
+export function updateRequestShift(shift: IShift): any {
+    return function (dispatch:ThunkDispatch<IInitialState, null, Action<string>>) {
+        return shiftsAPI.put(shift)
+            .then(updatedShift => dispatch({type: REQUEST_SHIFT_TAKEOVER, payload: { updatedShift }}));
     }
 }

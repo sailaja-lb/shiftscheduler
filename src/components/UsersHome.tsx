@@ -28,6 +28,8 @@ function UsersHome() {
                     </thead>
                     <tbody>
                         {users.map((user, index) => (
+                            //Keys are used in React to identify which items in the list are changed, updated, or deleted.
+                            //Keys are used to give an identity to the elements in the lists
                             <tr key={index}>
                                 <td>{user.id}</td>
                                 <td>{user.firstName} {user.lastName}</td>

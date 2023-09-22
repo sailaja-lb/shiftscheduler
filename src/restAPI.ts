@@ -192,16 +192,6 @@ const timeoffAPI = {
                 );
             });
     },
-    requestTimeoffs(userId: number) {
-        return fetch(`${baseUrl}/timeoff?userId=${userId}`)
-            .then(checkStatus("timeoff"))
-            .then(parseJSON)
-            .catch((error: TypeError) => {
-                throw new Error(
-                    'There was an error requesting the timeoffs. Please try again.'
-                );
-            });
-    }
 
 };
 

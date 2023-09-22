@@ -1,8 +1,8 @@
 import React from "react";
-import {IShift, IUser} from "../state/schedulerTypes";
+import {CREATE_SHIFT_CANCEL, IShift, IUser} from "../state/schedulerTypes";
 import {shiftsAPI} from "../restAPI";
 import {useDispatch} from "react-redux";
-import {updateShift} from "../state/schedulerActions";
+import {updateRequestShift, updateShift} from "../state/schedulerActions";
 
 interface propsViewShifts {
     shifts: IShift[];
@@ -15,6 +15,22 @@ function ViewShifts(props: propsViewShifts) {
     const { role, id:loggedInUserId } = loggedInUser;
 
     const acceptShift = (shiftId: number | undefined) => () => {
+        if (shiftId) {
+            const selectedShift: IShift | undefined = shifts.find(each => each.id === shiftId);
+            if (selectedShift) {
+                dispatch(updateShift({...selectedShift, userId: loggedInUserId}));
+            }
+        }
+    }
+    const updateShiftTakeover = (shiftId: number | undefined) => () => {
+        if (shiftId) {
+            const selectedShift: IShift | undefined = shifts.find(each => each.id === shiftId);
+            if (selectedShift) {
+                dispatch(updateRequestShift({...selectedShift, userId: 0}));
+            }
+        }
+    }
+    const assignShift = (shiftId: number |undefined) => () => {
         if (shiftId) {
             const selectedShift: IShift | undefined = shifts.find(each => each.id === shiftId);
             if (selectedShift) {
@@ -45,9 +61,9 @@ function ViewShifts(props: propsViewShifts) {
                             <td>{new Date(shift.endDate).toLocaleString()}</td>
                             <td>{shift.userId}</td>
                             <td>
-                                {role === 'user' && shift.userId === loggedInUserId ? <button>Request</button> : null}
-                                {role === 'user' && shift.userId === 0 ? <button onClick={acceptShift(shift.id)}>Accept</button> : null}
-                                {role === 'admin' && shift.userId === 0 ? <button>Assign</button> : null}
+                                {role === 'user' && shift.userId === loggedInUserId ? <button onClick={updateShiftTakeover(shift.id)}>Request</button> : null}
+                                {role === 'user' && shift.userId === 0 ? <button onClick={acceptShift(shift.id)}>Claim</button> : null}
+                                {role === 'admin' && shift.userId === 0 ? <button onClick={assignShift(shift.id)}>Assign</button> : null}
                             </td>
                         </tr>
                         )

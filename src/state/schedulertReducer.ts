@@ -27,7 +27,8 @@ import {
     VIEW_SHIFTS,
     VIEW_SHIFTS_ERROR,
     VIEW_TIMEOFFS,
-    VIEW_TIMEOFFS_ERROR
+    VIEW_TIMEOFFS_ERROR,
+    REQUEST_SHIFT_TAKEOVER
 } from './schedulerTypes';
 
 export const newUserModel: IUser = { firstName: "", lastName: "", username: "", password: "", role:  "user"};
@@ -91,14 +92,7 @@ export function schedulerReducer(
                 isLoggedIn: false,
                 loginErrorMessage: action.payload.message
             };
-        case CREATE_USER_SUCCESS:
-            return {
-                ...state,
-                successfulRegisterMessage: "User has been registered successfully",
-                newUser: {...newUserModel},
-                errorRegisterMessage: "",
-                isCreateUserInProgress: false
-            };
+
         case CREATE_USER:
             return {
                 ...state,
@@ -111,6 +105,14 @@ export function schedulerReducer(
                 ...state,
                 isCreateUserInProgress: true
             };
+        case CREATE_USER_SUCCESS:
+            return {
+                ...state,
+                successfulRegisterMessage: "User has been registered successfully",
+                newUser: {...newUserModel},
+                errorRegisterMessage: "",
+                isCreateUserInProgress: false
+            };
         case CREATE_USER_ERROR:
             return {
                 ...state,
@@ -121,6 +123,7 @@ export function schedulerReducer(
             return {
                 ...state,
                 newUser: {...newUserModel},
+                isCreateUserInProgress: false,
                 successfulRegisterMessage: "",
                 errorRegisterMessage: ""
             };
@@ -151,8 +154,9 @@ export function schedulerReducer(
         case CREATE_SHIFT_SUCCESS:
             return {
                 ...state,
+                shifts: [...state.shifts, action.payload.submittedShift],
                 isCreateShiftInProgress: false,
-                shifts: [...state.shifts, action.payload.submittedShift]
+                newShift: {...newShiftModel}
             };
         case CREATE_SHIFT_CANCEL:
             return {
@@ -176,6 +180,20 @@ export function schedulerReducer(
                 isAdminViewShifts: true,
                 newShift: {...newShiftModel},
                 errorMessage: action.payload.message
+            };
+        case REQUEST_SHIFT_TAKEOVER:
+            return {
+                ...state,
+                isCreateShift: false,
+                isAdminViewShifts: true,
+                newShift: {...newShiftModel},
+                shifts: state.shifts.map(each => {
+                    if (each.id === action.payload.updatedShift.id) {
+                        return action.payload.updatedShift;
+                    }
+                    return each;
+                }),
+                errorMessage: ''
             };
         case VIEW_TIMEOFFS:
             return {

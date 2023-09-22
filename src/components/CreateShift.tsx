@@ -32,8 +32,8 @@ function CreateShift() {
                 <input type="text" name="title" value={title} placeholder="Title" onChange={handleChange} required={true}/>
                 <label htmlFor="date">Start Date</label>
                 <input type="datetime-local" name="date" value={date} placeholder="Start Shift" onChange={handleChange} required={true}/>
-                <label htmlFor="enddate">End Date</label>
-                <input type="datetime-local" name="date" value={endDate} placeholder="End Shift" onChange={handleChange} required={true}/>
+                <label htmlFor="date">End Date</label>
+                <input type="datetime-local" name="endDate" value={endDate} placeholder="End Shift" onChange={handleChange} required={true}/>
                 <label htmlFor="userId">User (optional)</label>
                 <select name={"userId"} onChange={handleChange}>
                     <option key={0}>-- Select user --</option>

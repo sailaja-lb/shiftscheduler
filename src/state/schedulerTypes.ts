@@ -25,7 +25,12 @@ export const REQUEST_TIMEOFF_SUCCESS = 'REQUEST_TIMEOFF_SUCCESS';
 export const REQUEST_TIMEOFF_ERROR = 'REQUEST_TIMEOFF_ERROR';
 export const TIMEOFF_UPDATE_STATUS = 'TIMEOFF_UPDATE_STATUS';
 export const ACCEPT_AVAILABLE_SHIFT = 'ACCEPT_AVAILABLE_SHIFT';
+export const REQUEST_SHIFT_TAKEOVER = 'REQUEST_SHIFT_TAKEOVER';
 
+
+
+//an interface is an abstract type that tells the compiler which property names a given object can have.
+// TypeScript creates implicit interfaces when you define an object with properties.
 // User type
 export interface IUser {
     "id"?: number,
@@ -128,7 +133,6 @@ export interface ICreateShiftSuccess {
 }
 export interface ICreateShiftError {
     type: typeof CREATE_SHIFT_ERROR;
-    //why no payload
 }
 export interface ICreateShiftCancel {
     type: typeof CREATE_SHIFT_CANCEL;
@@ -178,6 +182,11 @@ export interface IAcceptAvailableShift {
     payload: { updatedShift: IShift }
 }
 
+export interface IRequestShiftTakeover {
+    type: typeof REQUEST_SHIFT_TAKEOVER;
+    payload: { updatedShift: IShift };
+}
+
 export type ActionTypes =
     | IUpdateCredentials
     | ILoginStart
@@ -203,4 +212,6 @@ export type ActionTypes =
     | IRequestTimeoffSuccess
     | ITimeoffUpdateStatus
     | IAcceptAvailableShift
+    | IRequestShiftTakeover
     | IRequestTimeoffsError;
+
