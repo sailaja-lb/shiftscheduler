@@ -15,6 +15,9 @@ export default function configureStore(preloadedState: any) {
     // The thunk can be used to delay the dispatch of an action, or to dispatch only if a certain condition is met.
     // The inner function receives the store methods dispatch and getState as parameters.
     const middlewares = [ReduxThunk];
+
+    //Redux middleware provides a third-party extension point between dispatching an action,
+    // and the moment it reaches the reducer
     const middlewareEnhancer = applyMiddleware(...middlewares);
 
     //Thunk is middleware
