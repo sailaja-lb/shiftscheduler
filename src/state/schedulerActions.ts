@@ -17,8 +17,6 @@ import {
     USERS,
     VIEW_TIMEOFFS,
     VIEW_TIMEOFFS_ERROR,
-    REQUEST_TIMEOFF,
-    REQUEST_TIMEOFF_ERROR,
     ITimeoff,
     REQUEST_TIMEOFF_SUCCESS, TIMEOFF_UPDATE_STATUS, ACCEPT_AVAILABLE_SHIFT, REQUEST_SHIFT_TAKEOVER
 } from "./schedulerTypes";
@@ -95,7 +93,7 @@ export function viewUserTimeoffs(userId: number): any {
 export function viewAllUsers(): any {
     return function (dispatch:ThunkDispatch<IInitialState, null, Action<string>>) {
         return usersAPI.getAll()
-            .then(users => dispatch({type: USERS, payload: { users }}));
+            .then(users => dispatch({type: USERS, payload: { users }}))
     }
 }
 //
@@ -123,3 +121,5 @@ export function updateRequestShift(shift: IShift): any {
             .then(updatedShift => dispatch({type: REQUEST_SHIFT_TAKEOVER, payload: { updatedShift }}));
     }
 }
+
+

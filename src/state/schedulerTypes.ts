@@ -1,6 +1,5 @@
 //action types
 
-import exp from "constants";
 
 export const UPDATE_CREDENTIALS = 'UPDATE_CREDENTIALS'
 export const LOGIN_START = 'LOGIN_START'

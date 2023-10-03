@@ -36,7 +36,7 @@ function Login() {
                 <label htmlFor="username">Username</label>
                 <input type="text" id="username" name="username" placeholder="username" value={username} required={true} onChange={handleChange} />
                 <label htmlFor="password">Password</label>
-                <input name="password" id="password" placeholder="password" type={"password"} value={password} required={true} onChange={handleChange} />
+                <input name="password"  id="password" placeholder="password" type={"password"} value={password} required={true} onChange={handleChange} />
                 <div className="input-group-vertical">
                     <button className="primary bordered medium" type={"submit"} disabled={loginDisabled}>Login</button>
                 </div>

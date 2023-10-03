@@ -60,6 +60,7 @@ export const initialState: IInitialState = {
     isRequestTimeoff: false
 };
 
+
 export function schedulerReducer(
     state:IInitialState = initialState,
     action: ActionTypes
@@ -249,4 +250,4 @@ export function schedulerReducer(
             return state;
 
     }
-}
+}{}

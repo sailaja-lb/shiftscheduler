@@ -9,8 +9,8 @@ function CreateUser() {
     const dispatch = useDispatch();
     const {firstName, lastName, username, password, role}: IUser = useSelector((state:AppState) => state.schedulerState.newUser);
     const isCreateUserInProgress: boolean = useSelector((state:AppState) => state.schedulerState.isCreateUserInProgress);
-    const successfulRegisterMessage = useSelector((state: AppState) => state.schedulerState.successfulRegisterMessage);
-    const errorRegisterMessage = useSelector((state: AppState) => state.schedulerState.errorRegisterMessage)
+    const successfulRegisterMessage:string = useSelector((state: AppState) => state.schedulerState.successfulRegisterMessage);
+    const errorRegisterMessage: string = useSelector((state: AppState) => state.schedulerState.errorRegisterMessage)
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
         const { name, value } = event.target;
         const changeValue = {

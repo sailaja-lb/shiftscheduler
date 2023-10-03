@@ -1,6 +1,5 @@
-import React, {useRef, useState} from "react";
-import {CREATE_SHIFT_CANCEL, IShift, IUser} from "../state/schedulerTypes";
-import {shiftsAPI} from "../restAPI";
+import React, {useState} from "react";
+import { IShift, IUser} from "../state/schedulerTypes";
 import {useDispatch} from "react-redux";
 import {updateRequestShift, updateShift} from "../state/schedulerActions";
 
@@ -25,7 +24,7 @@ function ViewShifts(props: propsViewShifts) {
             }
         }
     }
-    const updateShiftTakeover = (shiftId: number | undefined) => () => {
+    const updateShiftTakeover = (shiftId: number | undefined) => ():void => {
         if (shiftId) {
             const selectedShift: IShift | undefined = shifts.find(each => each.id === shiftId);
             if (selectedShift) {
@@ -33,7 +32,7 @@ function ViewShifts(props: propsViewShifts) {
             }
         }
     }
-    const submitAssignShift = (event: React.SyntheticEvent<HTMLFormElement>) => {
+    const submitAssignShift = (event: React.SyntheticEvent<HTMLFormElement>):void => {
         event.preventDefault();
         const selectedShift: IShift | undefined = shifts.find(each => each.id === selectedShiftId);
         if (selectedShift) {
